@@ -1,0 +1,20 @@
+<div class="modal-dialog modal-md" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar Desactivación</h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="form-inline" action="{% url 'disable-company' obj.pk %}">
+                     {% csrf_token %}
+                    <h4>¡Atención!</h4>
+                    <p class="justify-content: center text-align: center ">Al desactivar a {{ obj.name }}, no estará disponible para otras funciones
+                    y solamente el Super Usuario podra activarlo de nuevo</p>
+                    <h5 class="text-justify">¿Deseas Desactivar a {{ obj.name }}?</h5>
+                    <div class="modal-footer">
+                        <button class = "btn bg-gradient-danger cerrar_modal" type="button" data-dismiss="modal" onclick="return cerrar_modal()">Cancelar</button>
+                        <button class = "btn bg-gradient-success" type="submit" >Confirmar</button>
+                    </div>
+               </form>
+            </div>
+        </div>
+</div>

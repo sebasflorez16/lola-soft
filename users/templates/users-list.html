@@ -1,0 +1,76 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Lista de Usuarios{% endblock title%}
+{% block stylesheets %} {% endblock stylesheets %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+
+</ul>
+{% endif %}
+
+<div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header mb-6">
+                    <h6>Lista de Usuarios</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    {% if not obj %}
+                        <div class="alert alert-info"> No tienes Usuarios</div>
+                    {% endif %}
+                    <a href="{% url 'users-create' %}" type="button" class="btn bg-gradient-primary" >Agregar Usuario</a>
+                    <div class="table-responsive p-0">
+                        <table class="table aling-items-center mb-0" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder ">Username</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Nombre</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Is Staff</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in obj %}
+                                <tr>
+                                    <td>{{ item.username }}</td>
+                                    <td>{{ item.name }} </td>
+
+                                    <td>{{ item.is_staff|yesno:"Es Staff,No es Staff" }} -
+                                    {% if item.is_staff %}
+                                        <i class="fas fa-user-check" style="color:green;"></i>
+                                    {% else %}
+                                        <i class="fas fa-user-lock" style="color:red;"></i>
+                                    {% endif %}
+                                    </td>
+                                    {% if user.is_superuser %}
+                                        <td>{{ item.is_active|yesno:"Activo,Inactivo" }} </td>
+                                        {% if item.is_active %}
+                                        <td>
+                                            <a onclick="return abrir_modal ('{% url 'disable-user' item.pk %}')" data-toggle="ventana_modal" class="btn bg-gradient-danger" role="button">Desactivar</a>
+                                        </td>
+                                        {% else %}
+                                        <td>
+                                            <a onclick="return abrir_modal ('{% url 'activate-user' item.pk %}')" role="button" class="btn bg-gradient-success" data-toggle="ventana_modal">Activar</a>
+                                        </td>
+                                        {% endif %}
+                                    {% endif %}
+                                    <td>
+                                        <a href="{% url 'user-detail' item.pk %}" class="btn bg-gradient-success" role="button">Perfil</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

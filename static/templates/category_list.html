@@ -1,0 +1,58 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Lista de Categorias {% endblock title%}
+{% block stylesheets %} {% endblock stylesheets %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header mb-6">
+                    <h6>Lista de Categorias</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    {% if not category %}
+                        <div class="alert alert-info"> No tienes Categorias Agregadas</div>
+                    {% endif %}
+                    <a class="btn bg-gradient-primary" type="button" href="#">Agregar Categoria</a>
+                    <div class="table-responsive p-0">
+                        <table class="table aling-items-center mb-0" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder ">Nombre</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for obj in category %}
+                                <tr>
+                                    <td>{{ obj.description }}</td>
+                                    <td>{{ obj.state|yesno:"Activo,Inactivo" }} </td>
+                                    {% if obj.state %}
+                                    <td>
+                                        <a href="{% url 'disable-category' obj.pk %}" class="btn bg-gradient-danger" role="button">Desactivar</a>
+                                    </td>
+                                    {% else %}
+                                    <td>
+                                        <a onclick="return abrir_modal('{% url 'activate-model' obj.pk %}')" role="button" class="btn bg-gradient-success" data-toggle="ventana_modal">Activar</a>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,17 @@
+  <div class="modal-dialog modal-md" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Registrar Empresa Nueva</h5>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{% url 'companies-create' %}">
+          {% csrf_token %}
+            {{ form.as_p }}
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary cerrar_modal" onclick="return cerrar_modal()" data-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Crear</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

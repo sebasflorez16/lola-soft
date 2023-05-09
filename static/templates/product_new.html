@@ -1,0 +1,94 @@
+<div class="modal-dialog modal-lg" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Crear Nuevo Producto</h2>
+                <button type="button" class="close cerrar_modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" role="form" class="form-inline">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="col-md-6">{{form.name.label}}</div>
+                            <div class="col-md-6">{{form.name}}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">{{form.code.label}}</div>
+                            <div class="col-md-6">{{form.code}}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">{{form.description.label}}</div>
+                            <div class="col-md-6" type="text">{{form.description}}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">{{form.stock.label}}</div>
+                            <div class="col-md-6" type="text">{{form.stock}}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">{{form.price.label}}</div>
+                            <div class="col-md-6" type="text">{{form.price}}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">{{form.brand.label}}</div>
+                            <div class="col-md-6" type="text">{{form.brand}}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">{{form.expired.label}}</div>
+                            <div class="col-md-6" type="text">{{form.expired}}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">{{form.is_active.label}}</div>
+                            <div class="col-md-6" type="text">{{form.is_active}}</div>
+                        </div>
+                    </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md">Categoría</div>
+                                        <select name="categoria" id="id_categoria" class="form-control from-control-sm">
+                                            <option value="0">-------</option>
+                                            {% for item in category %}
+                                            <option value="{{item.id}}">{{item.description}}</option>
+                                            {% endfor%}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md">Sub Categoría</div>
+                                        <select name="subcategoria" id="id_subcategoria" class="form-control from-control-sm">
+                                            <option value="0">-------</option>
+                                            {% for item in subcategorias %}
+                                            <option value="{{item.id}}" data-chained="{{item.categoria.id}}">{{item.description}}</option>
+                                            {% endfor%}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md">U. Medida</div>
+                                        <select name="subcategoria" id="unite_measure" class="form-control from-control-sm">
+                                            <option value="0">-------</option>
+                                            {% for item in unite_measure %}
+                                            <option value="{{item.id}}" data-chained="{{item.unite_measure.id}}">{{item.description}}</option>
+                                            {% endfor%}
+                                        </select>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="footer">
+                <div class="d-flex justify-content-center">
+                    <div class="text-center">
+                        <button class="btn btn-danger m-2 cerrar_modal" type="button" data-dismiss="modal" onclick="return cerrar_modal()">Cancelar</button>
+                        <button class="btn btn-primary m-2 " type="submit">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+

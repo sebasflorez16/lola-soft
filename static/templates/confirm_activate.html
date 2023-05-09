@@ -1,0 +1,25 @@
+<div class="modal-dialog modal-md" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmar activación</h4>
+                <button type="button" onclick="return cerrar_modal()" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" class="form-inline" action="{% url 'activate-model' obj.pk %}" >
+                     {% csrf_token %}
+                    <h5 class="text-justify">¿Deseas activar a {{ obj.description }}?</h5>
+
+
+                    <div class="modal-footer">
+                        <button class = "btn bg-gradient-danger cerrar_modal" type="button" data-dismiss="modal" onclick="return cerrar_modal()">Cancelar</button>
+                        <button class = "btn bg-gradient-success" type="submit" >Confirmar</button>
+                    </div>
+               </form>
+            </div>
+        </div>
+</div>
+
+
+
+

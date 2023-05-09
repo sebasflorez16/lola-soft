@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Lista de Proyectos {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+<form method="POST" action="{% url 'project-create' %}">
+  {% csrf_token %}
+  <div class="form-group">
+    <div class="form-control">
+      {{ form.as_p }}
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Crear</button>
+
+</form>
+
+
+
+{% endblock content %}

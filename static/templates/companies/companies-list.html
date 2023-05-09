@@ -1,0 +1,86 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block title %} Lista de Empresas{% endblock title%}
+{% block stylesheets %} {% endblock stylesheets %}
+
+{% block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+
+</ul>
+{% endif %}
+
+<div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header mb-6">
+                    <h6>Lista Empresas</h6>
+                </div>
+                <div class="card-body px-0 pt-0 pb-2">
+                    {% if not obj %}
+                        <div class="alert alert-info"> No hay empresas registradas</div>
+                    {% endif %}
+                    <a onclick="return abrir_modal ('{% url 'companies-create' %}')" role="button" class="btn bg-gradient-success" data-toggle="ventana_modal">Agregar Empresa</a>
+                    <div class="table-responsive p-0" >
+                        <table class="table aling-items-center mb-0 " id="myTable" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder ">Name</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Social Id</th>
+                                    <th class="text-uppercase text-secondary text-xs font-weight-bolder">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in obj %}
+                                <tr>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.social_id }}</td>
+
+                                    <td>{{ item.is_active|yesno:"Activo,Inactivo" }} -
+                                    {% if item.is_active %}
+                                        <i class="fas fa-user-check" style="color:green;"></i>
+                                    {% else %}
+                                        <i class="fas fa-user-lock" style="color:red;"></i>
+                                    {% endif %}
+                                    </td>
+                                    {% if user.is_superuser %}
+                                        {% if item.is_active %}
+                                        <td>
+                                            <a onclick="return abrir_modal ('{% url 'disable-company' item.pk %}')" role="button" class="btn bg-gradient-warning" data-toggle="ventana_modal">Desactivar</a>
+                                        </td>
+                                        {% else %}
+                                        <td>
+                                            <a onclick="return abrir_modal('{% url 'activate-company' item.pk %}')" role="button" class="btn bg-gradient-success" data-toggle="ventana_modal">Activar</a>
+                                        </td>
+                                        {% endif %}
+                                    {% endif %}
+                                        <td>
+                                            <a href="{% url 'companies-detail' item.pk %}" class="btn bg-gradient-info" role="button">Detalle</a>
+                                        </td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+
+    $(document).ready(function() {
+  $('#myTable').DataTable({
+    searching: true
+  });
+});
+
+</script>
+{% endblock javascripts %}
